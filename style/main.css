@@ -135,6 +135,7 @@ button {
 .tool__wheel-deg:hover {
   width: 15rem;
   border: 0.5rem solid #323228;
+  box-shadow: 0.5rem 0.5rem #323228;
 }
 .tool__wheel-deg:hover .arrow {
   opacity: 1;
@@ -168,6 +169,7 @@ button {
   background-color: #fec194;
   border: 0.5rem solid #323228;
   border-radius: 2rem;
+  box-shadow: 0.5rem 0.5rem #323228;
 }
 .tool__output-btn {
   padding: 1rem;
@@ -177,6 +179,11 @@ button {
   background-color: #fec194;
   border: 0.5rem solid #323228;
   border-radius: 2rem;
+  box-shadow: 0.5rem 0.5rem #323228;
+}
+.tool__output-btn:active {
+  transform: scale(0.95);
+  opacity: 0.9;
 }
 
 .arrow {
@@ -214,11 +221,13 @@ button {
   display: flex;
   justify-content: space-between;
   background-color: #FCF3E7;
+  margin-right: 0.7rem;
 }
 .tool__color-control:hover {
   width: 10rem;
   border: 0.5rem solid #323228;
   background-color: #fec194;
+  box-shadow: 0.5rem 0.5rem #323228;
 }
 .tool__color-control:hover .color-btn {
   opacity: 1;
@@ -246,6 +255,7 @@ button {
   background-color: #fec194;
   border: 0.5rem solid #323228;
   border-radius: 2rem;
+  box-shadow: 0.5rem 0.5rem #323228;
 }
 
 /*# sourceMappingURL=main.css.map */

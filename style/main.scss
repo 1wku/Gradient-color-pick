@@ -125,6 +125,8 @@ button {
             &:hover {
                 width: 15rem;
                 border: 0.5rem solid #323228;
+                box-shadow: 0.5rem 0.5rem $line-cl;
+
             }
             &:hover .arrow {
                 opacity: 1;
@@ -157,6 +159,7 @@ button {
             background-color: #fec194;
             border: 0.5rem solid #323228;
             border-radius: 2rem;
+            box-shadow: 0.5rem 0.5rem $line-cl;
         }
         &-btn {
             padding: 1rem;
@@ -166,6 +169,11 @@ button {
             background-color: #fec194;
             border: 0.5rem solid #323228;
             border-radius: 2rem;
+            box-shadow: 0.5rem 0.5rem $line-cl;
+            &:active {
+                transform: scale(0.95);
+                opacity: 0.9;
+            }
         }
     }
 }
@@ -203,10 +211,12 @@ button {
         display: flex;
         justify-content: space-between;
         background-color: $main-cl;
+        margin-right: 0.7rem;
         &:hover {
             width: 10rem;
             border: 0.5rem solid #323228;
             background-color: #fec194;
+            box-shadow: 0.5rem 0.5rem $line-cl;
         }
         &:hover .color-btn {
             opacity: 1;
@@ -235,4 +245,5 @@ button {
     background-color: #fec194;
     border: 0.5rem solid #323228;
     border-radius: 2rem;
+    box-shadow: 0.5rem 0.5rem $line-cl;
 }

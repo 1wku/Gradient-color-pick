@@ -106,6 +106,7 @@
                         // arrColor[number-1] = colorItem.value;
                         preview.style.background = commitCl();
                         console.log(arrColor);
+                        output.innerHTML = `background-image: linear-gradient( ${x}deg, ${arrColor.join(',')} );`;
                     }
                 });
                 allDeg(color);
@@ -114,7 +115,6 @@
             }
             preview.style.background = commitCl();
             output.innerHTML = `background-image: linear-gradient( ${x}deg, ${arrColor.join(',')} );`;
-
         });
         removeColor.addEventListener("click", function() {
             color--;
