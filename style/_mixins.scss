@@ -1,0 +1,25 @@
+@use "sass:math";
+@use "sass:list";
+@mixin set-grid( $column-st, $column-end, $row-st, $row-end) {
+    grid-column: list.slash($column-st, $column-end);
+    grid-row: list.slash($row-st, $row-end);
+}
+
+@mixin centerAbsolute($x : 0, $y : 0) {
+    @if($x != 0 and $y != 0) {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    @if($x != 0 and $y == 0) {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    @if($x == 0 and $y != 0) {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+    } 
+}

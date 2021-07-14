@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style/reset.css">
+    <link rel="stylesheet" href="./style/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="./style/all.css">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,500;0,700;1,300;1,400&display=swap" rel="stylesheet">
+    <title>Gradient color</title>
+</head>
+<body>
+    <div class="container">
+        <div class="heading">
+            <div class="heading__title">GRADIENT PICK</div>
+            <div class="heading__control">
+                <i class="window-control fas fa-window-minimize"></i>
+                <i class="window-control far fa-window-restore"></i>
+                <i class="window-control fas fa-times"></i>
+            </div>
+        </div>
+        <div class="tool">
+            <div id="color-preview" class="tool__preview"></div>
+            <div class="tool__wheel">
+                <i  id= "arrow-deg" class="tool__wheel-arrow fas fa-angle-up"></i>
+                <div class="tool__wheel-deg">
+                    <button id="prev-btn" class="arrow prev"></button>
+                    <input type="text" value="0" id="num-deg" min = '0' max = '360'>
+                </input>
+                    <button id="next-btn" class="arrow next"></button>
+                </div>
+            </div>
+            <div class="tool__color">
+                <div class="tool__color-control">
+                    <button id="remove-color" class="fas fa-minus color-btn "></button>
+                    <input id="color-amount" type="text" value="2" min = '0' max = '360'>
+                </input>
+                    <button id="add-color" class="fas fa-plus color-btn "></button>
+                </div>
+                <div id="color-feild" class="tool__color-feild">
+                    <input class="color-item" type="text" value="#fec194" id="color-1"> 
+                    <input class="color-item" type="text" value="#ff0061" id="color-2"> 
+                </div>
+            </div>
+            <div class="tool__output">
+                <p id="output" class="tool__output-text">background-image: linear-gradient(xdeg, color-1, color-2);</p>
+                <button class="tool__output-btn" id="copy">copy</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        let getId = (a) => {
+            return document.getElementById(a);
+        }
+        let nextBtn = getId('next-btn');
+        let prevBtn = getId('prev-btn');
+        let degNum = getId('num-deg');
+        let arrowTg = getId('arrow-deg');
+        let colorFeild = getId('color-feild')
+        let colorAmount = getId('color-amount');
+        let removeColor = getId('remove-color')
+        let addColor = getId('add-color')
+        let preview = getId('color-preview');
+        let output = getId('output');
+        let copyBtn = getId('copy');
+        let x = 0;
+        let color = colorAmount.value;
+        let arrColor = new Array(getId('color-1').value, getId('color-2').value);
+        let deg = (a) => {
+            return `translate(-50%, -50%) rotate(${a}deg)`;
+        };
+        let commitDeg = (a) => {
+            return `linear-gradient(${a}deg,${arrColor.join(',')})`;
+        };
+        let commitCl = () => {
+            return `linear-gradient(${x}deg,${arrColor.join(',')})`;
+        }
+        let allDeg = (a) => {
+            for (let i = 0; i < a; i++) {
+                arrColor[i] = getId(`color-${i+1}`).value;
+            }
+        }
+        const arrayHasIndex = (array, index) => Array.isArray(array) && array.hasOwnProperty(index);
+        degNum.innerHTML = x;
+        addColor.addEventListener("click", function() {
+            color++;
+            if(color <= 4){
+                colorAmount.value = color;
+                let colorItem = document.createElement('input');
+                colorItem.id = `color-${color}`;
+                colorFeild.appendChild(colorItem);
+                colorItem.value  = "#fff";
+                colorItem.classList.add('color-item');
+                colorItem.addEventListener("keyup",function(event) {
+                    event.preventDefault();
+                    if(event.keyCode === 13) {
+                        let number = colorItem.id.match(/[0-9]/);
+                        if (color == 4) {
+                            allDeg(4);
+                        } else {
+                            allDeg(number);
+                        }
+                        // arrColor[number-1] = colorItem.value;
+                        preview.style.background = commitCl();
+                        console.log(arrColor);
+                    }
+                });
+                allDeg(color);
+            } else {
+                color--;
+            }
+            preview.style.background = commitCl();
+            output.innerHTML = `background-image: linear-gradient( ${x}deg, ${arrColor.join(',')} );`;
+
+        });
+        removeColor.addEventListener("click", function() {
+            color--;
+            if(color>=2) {
+                color++;
+                let colorItem = document.getElementById(`color-${color}`);
+                colorFeild.removeChild(colorItem);
+                if(arrayHasIndex(arrColor,color-1)) {
+                    arrColor.pop();
+                };
+                color--;
+                colorAmount.value = color;
+            } else {
+                color++;
+            }
+            preview.style.background = commitCl();
+            output.innerHTML = `background-image: linear-gradient( ${x}deg, ${arrColor.join(',')} );`;
+            console.log(color);
+        });
+        // `linear-gradient(to right bottom, #fec194, #ff0061,)`
+        nextBtn.addEventListener("click",function() {
+            x++;
+            if(x >= 360) {
+                x = 0;
+            }
+            degNum.value = x;
+            arrowTg.style.transform = deg(x);
+            preview.style.background = commitDeg(x);
+            output.innerHTML = `background-image: linear-gradient( ${x}deg, ${arrColor.join(',')} );`;
+        });
+        prevBtn.addEventListener("click",function() {
+            x--;
+            if (x < 0) {
+                x = 359;
+            }
+            degNum.value = x;
+            arrowTg.style.transform = deg(x);
+            preview.style.background = commitDeg(x);
+            output.innerHTML = `background-image: linear-gradient( ${x}deg, ${arrColor.join(',')} );`;
+        });
+        nextBtn.addEventListener("dblclick",function() {
+            x+=8;
+            if(x > 360) {
+                x = x-360;
+            }
+            degNum.value = x;
+            arrowTg.style.transform = deg(x);
+            preview.style.background = commitDeg(x);
+            output.innerHTML = `background-image: linear-gradient( ${x}deg, ${arrColor.join(',')} );`;
+        });
+        prevBtn.addEventListener("dblclick",function() {
+            x-=8;  
+            if(x < 0) {
+                x = 360 + x;
+            }
+            degNum.value = x;
+            arrowTg.style.transform = deg(x);
+            preview.style.background = commitDeg(x);
+            output.innerHTML = `background-image: linear-gradient( ${x}deg, ${arrColor.join(',')} );`;
+        });
+        degNum.addEventListener("keyup",function(event) {
+            event.preventDefault();
+            if(event.keyCode === 13) {
+                x = degNum.value;
+                arrowTg.style.transform = deg(x);   
+                preview.style.background = commitDeg(x);
+                output.innerHTML = `background-image: linear-gradient( ${x}deg, ${arrColor.join(',')} );`;
+            }
+        });
+        getId('color-1').addEventListener("keyup",function(event) {
+            event.preventDefault();
+            if(event.keyCode === 13) {
+                arrColor[0] = getId('color-1').value;
+                console.log(arrColor);
+                preview.style.background = commitCl();
+                output.innerHTML = `background-image: linear-gradient( ${x}deg, ${arrColor.join(',')} );`;
+            }
+        });
+        getId('color-2').addEventListener("keyup",function(event) {
+            event.preventDefault();
+            if(event.keyCode === 13) {
+                arrColor[0] = getId('color-2').value;
+                console.log(arrColor.join(','));
+                allDeg(2);
+                preview.style.background = commitCl();
+                output.innerHTML = `background-image: linear-gradient( ${x}deg, ${arrColor.join(',')} );`;
+            }
+        });
+        copyBtn.addEventListener("click", (event) => {
+            navigator.clipboard.writeText(`background-image: linear-gradient(${x}deg, ${arrColor.join(',')});`);  
+        })
+        console.log(arrayHasIndex(arrColor,2));
+    </script>
+</body>
+</html>
